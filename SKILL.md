@@ -11,6 +11,10 @@ Use this skill when the user wants a full front-end visual workflow: analyze a s
 
 Do not stop at abstract advice when the user expects implementation.
 
+This skill assumes the image-generation environment has already been configured during installation time. It should not re-run full environment diagnosis on every normal invocation.
+
+If image generation is missing entirely, prefer instructing the user (or installation flow) to run the repository setup script once instead of repeating config checks on every request.
+
 ## When to Use
 
 - The user shares a screenshot, mockup, or reference page and wants front-end visual improvement.
@@ -19,6 +23,20 @@ Do not stop at abstract advice when the user expects implementation.
 - The user wants the AI to choose a save path by probing the project instead of using a hard-coded asset directory.
 
 Do not use this skill for pure copy edits, non-visual frontend bugfixes, or backend-only work.
+
+## Installation Assumption
+
+This skill is designed to work best when the repository-provided installation/setup step has already wired the OpenCode image plugin and related configuration.
+
+The expected image-generation backend is:
+
+- OpenAI Images API compatible endpoint
+- `POST {baseURL}/images/generations`
+- `model: gpt-image-2`
+
+Do not route image generation through chat-completions style endpoints.
+
+Do not perform full config mutation by default during normal skill execution unless the user explicitly asks for setup or repair work.
 
 ## Core Workflow
 
