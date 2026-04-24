@@ -83,6 +83,25 @@ cp -r frontend-image-composition ~/.config/opencode/skills/
 - “安装 frontend-image-composition，并运行 setup.ps1 完成图片生成配置”
 - “帮我把 frontend-image-composition 装好，并接通 `gpt-image-2` 图片接口”
 
+### 给 AI 的自动修复指令示例
+
+如果别人已经装好了 skill，但图片链路还是不通，可以直接把下面这段话发给 AI：
+
+```text
+帮我修复 gpt-image-2 图片生成配置。
+
+请按这个原理检查并修复：
+1. 读取当前模型供应商的 baseURL
+2. 使用对应的 apiKey
+3. 确保图片请求走 POST {baseURL}/images/generations
+4. 模型使用 gpt-image-2
+5. 不要走 chat/completions
+6. 如果本地有 frontend-image-composition/setup.ps1，优先执行它
+7. 如果 setup 脚本不存在或失败，再直接修 opencode.json 和 oh-my-openagent.json
+```
+
+这段话的核心不是“让 AI 自己猜配置”，而是明确告诉它：**图片生成应该走当前 provider 的 OpenAI Images API 兼容端点，而不是聊天接口。**
+
 ## 使用建议
 
 适合这样触发：
@@ -97,3 +116,9 @@ cp -r frontend-image-composition ~/.config/opencode/skills/
 如果你的环境还没有正确配置图片生成链路，建议优先运行 `setup.ps1` 完成安装阶段配置。
 
 这个 skill 本身负责的是**前端素材工作流**，而不是重新实现图片生成工具本身；真正的图片生成能力通常来自插件和 OpenAI Images API。
+
+对于其他用户来说，最稳妥的做法是：
+
+1. 先安装 skill
+2. 运行 `setup.ps1`
+3. 如果仍有问题，再把上面的“自动修复指令示例”发给 AI，让 AI 按统一原理修复配置

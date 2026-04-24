@@ -15,6 +15,14 @@ This skill assumes the image-generation environment has already been configured 
 
 If image generation is missing entirely, prefer instructing the user (or installation flow) to run the repository setup script once instead of repeating config checks on every request.
 
+If the user explicitly asks to repair image generation, the canonical repair principle is:
+
+1. read the current provider `baseURL`
+2. use the corresponding `apiKey`
+3. call `POST {baseURL}/images/generations`
+4. set `model` to `gpt-image-2`
+5. do not route the request through chat-completions style endpoints
+
 ## When to Use
 
 - The user shares a screenshot, mockup, or reference page and wants front-end visual improvement.
@@ -37,6 +45,8 @@ The expected image-generation backend is:
 Do not route image generation through chat-completions style endpoints.
 
 Do not perform full config mutation by default during normal skill execution unless the user explicitly asks for setup or repair work.
+
+If setup or repair work is explicitly requested, prefer the repository-provided setup script first. Only fall back to direct config editing when the setup path is unavailable or has already failed.
 
 ## Core Workflow
 
