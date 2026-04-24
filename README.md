@@ -66,6 +66,12 @@ cp -r frontend-image-composition ~/.config/opencode/skills/
 .\setup.ps1
 ```
 
+如果你只想预览会改哪些内容，不实际写入文件：
+
+```powershell
+.\setup.ps1 -DryRun
+```
+
 这个脚本的目标是：
 
 - 确保 `opencode.json` 已挂载：
@@ -73,6 +79,8 @@ cp -r frontend-image-composition ~/.config/opencode/skills/
   - `./plugins/image-generator/index.js`
 - 修正 `oh-my-openagent.json` 中图片相关 agent / category 的基础配置
 - 移除把 `gpt-image-2` 当成通用聊天 fallback 的错误配置
+- 缺少必要字段时自动创建
+- 输出更清晰的修复摘要和备份路径
 
 脚本只应该在**安装或升级阶段**运行一次，而不是每次使用 skill 前都运行。
 
